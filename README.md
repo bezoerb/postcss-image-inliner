@@ -9,12 +9,14 @@
 ```css
 .foo {
     /* Input example */
+    background-image: url("https://placeholdit.imgix.net/~text?txtsize=5&txt=10%C3%9710&w=10&h=10&txtpad=1");
 }
 ```
 
 ```css
 .foo {
   /* Output example */
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAo ... ORK5CYII=");
 }
 ```
 
