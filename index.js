@@ -3,6 +3,7 @@ var Promise = require('bluebird'); // jshint ignore:line
 var isString = require('lodash.isstring');
 var defaults = require('lodash.defaults');
 var debug = require('debug')('image-inliner');
+var escape = require('lodash.escaperegexp');
 var map = require('lodash.map');
 var last = require('lodash.last');
 var getResource = require('./lib/resource').getResource;
@@ -58,7 +59,10 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
                     var url = getUrl(decl.value);
 
                     if (url && data[url]) {
-                        decl.value = decl.value.replace(url, data[url]);
+                        var regexp = new RegExp('[\'"]?' + escape(url) + '[\'"]?');
+                        decl.value = decl.value.replace(regexp, '\'' + data[url] + '\'');
+
+                        debug('Converted value:',decl.value );
                     }
                 });
             }).catch(function (err) {
