@@ -1,6 +1,6 @@
 # PostCSS Image Inliner [![Build Status][ci-img]][ci]
 
-[PostCSS] plugin to inline images into css.
+[PostCSS] plugin to inline local/remote images.
 
 [PostCSS]: https://github.com/postcss/postcss
 [ci-img]:  https://travis-ci.org/bezoerb/postcss-image-inliner.svg
@@ -23,7 +23,33 @@
 ## Usage
 
 ```js
-postcss([ require('postcss-image-inliner') ])
+var postcss = require('postcss');
+var imageInliner = require('postcss-image-inliner');
+var opts = {
+    assetPaths: [],     // List of directories where the inliner should look for assets
+    maxFileSize: 10240  // Sets a max file size (in bytes)
+}
+
+postcss([ imageInliner(opts) ])
 ```
 
 See [PostCSS] docs for examples for your environment.
+
+##Options
+####assetPaths
+Type: `array` 
+Default: `[process.cwd()]` 
+Example: `['http://domain.de/', 'http://domain.de/styles', 'app/images']` 
+Required: `false`
+
+List of directories where the inliner should start looking for assets. 
+You can define local directories or URLs.
+
+
+####maxFileSize
+Type: `int` 
+Default: 10240 
+Example: 0 
+Required: `false`
+
+Sets a max file size (in bytes) for inlined images. Set to `0` to disable size checking.
