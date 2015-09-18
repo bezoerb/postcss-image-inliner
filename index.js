@@ -15,7 +15,8 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
    // var matcher = /url\(\s*(?:['"]*)(?!['"]*data:)(.*?)(?:['"]*)\s*\)/gm;
 
     opts = defaults(opts || {}, {
-        assetPaths: []
+        assetPaths:  [],
+        maxFileSize: 10240
     });
 
     if (isString(opts.assetPaths)) {
