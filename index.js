@@ -44,7 +44,6 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
             if (url && !replacements[url]) {
                 replacements[url] = resolveUrl(url);
             }
-
         });
 
         return Promise.props(replacements)
@@ -59,7 +58,7 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
                         var regexp = new RegExp('[\'"]?' + escape(url) + '[\'"]?');
                         decl.value = decl.value.replace(regexp, '\'' + data[url] + '\'');
 
-                        debug('Converted value:',decl.value );
+                        debug('Converted value:', decl.value );
                     }
                 });
             }).catch(function (err) {
