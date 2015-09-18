@@ -2,6 +2,7 @@ var postcss = require('postcss');
 var Promise = require('bluebird'); // jshint ignore:line
 var isString = require('lodash.isstring');
 var defaults = require('lodash.defaults');
+var debug = require('debug')('image-inliner');
 var map = require('lodash.map');
 var last = require('lodash.last');
 var getResource = require('./lib/resource').getResource;
@@ -42,7 +43,11 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
             if (url && !replacements[url]) {
                 replacements[url] = resolveUrl(url);
             }
+
         });
+
+        // Buffer.byteLength(string, 'utf8')
+
 
         return Promise.props(replacements)
             .then(getDataUri)
@@ -55,9 +60,9 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
                     if (url && data[url]) {
                         decl.value = decl.value.replace(url, data[url]);
                     }
-                    return decl;
                 });
-                return css;
+            }).catch(function (err) {
+                debug(err.message || err);
             });
     };
 });

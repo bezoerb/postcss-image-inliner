@@ -9,7 +9,7 @@
 ```css
 .foo {
     /* Input example */
-    background-image: url("https://placeholdit.imgix.net/~text?txtsize=5&txt=10%C3%9710&w=10&h=10&txtpad=1");
+    background-image: url("https://placehold.it/10x10");
 }
 ```
 
