@@ -19,6 +19,7 @@
   "dependencies": {
     "bluebird": "^2.10.0",
     "debug": "^2.2.0",
+    "filesize": "^3.1.3",
     "lodash.defaults": "^3.1.2",
     "lodash.escaperegexp": "^3.0.1",
     "lodash.isstring": "^3.0.1",
@@ -28,7 +29,7 @@
     "lodash.reduce": "^3.1.2",
     "lodash.result": "^3.1.2",
     "mime": "^1.3.4",
-    "mime-types": "^2.1.6",
+    "object-hash": "^0.9.1",
     "postcss": "^5.0.2",
     "request": "^2.62.0",
     "svgo": "^0.5.6",

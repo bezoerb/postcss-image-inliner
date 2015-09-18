@@ -46,6 +46,11 @@ describe('postcss-image-inliner', function () {
         server.close(done);
     });
 
+    it('should skip to big images', function (done) {
+        test('.foo { background-image: url(test/images/blank.gif); }',
+            '.foo { background-image: url(test/images/blank.gif); }', { maxFileSize: 1 }, done);
+    });
+
     it('should inline images as data URIs', function (done) {
         test('.foo { background-image: url(test/images/blank.gif); }',
             '.foo { background-image: url(\'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==\'); }', {}, done);

@@ -23,7 +23,7 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
 
     function resolveUrl(filepath) {
         return Promise.any(map(opts.assetPaths, function (base) {
-            return getResource(base, filepath);
+            return getResource(base, filepath, opts);
         }));
     }
 
@@ -46,9 +46,6 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
             }
 
         });
-
-        // Buffer.byteLength(string, 'utf8')
-
 
         return Promise.props(replacements)
             .then(getDataUri)
