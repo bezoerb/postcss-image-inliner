@@ -6,11 +6,14 @@ var debug = require('debug')('image-inliner');
 var escape = require('lodash.escaperegexp');
 var map = require('lodash.map');
 var last = require('lodash.last');
+var reduce = require('lodash.reduce');
 var getResource = require('./lib/resource').getResource;
 var getDataUri = require('./lib/image').getDataUri;
 
 
 module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
+   // var matcher = /url\(\s*(?:['"]*)(?!['"]*data:)(.*?)(?:['"]*)\s*\)/gm;
+
     opts = defaults(opts || {}, {
         assetPaths: []
     });
@@ -24,43 +27,50 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
     function resolveUrl(filepath) {
         return Promise.any(map(opts.assetPaths, function (base) {
             return getResource(base, filepath, opts);
-        }));
+        })).catch(function (err) {
+            debug(err.message || err, filepath, 'could not be resolved');
+        });
     }
 
-    function getUrl(value) {
-        var matcher = /url\(\s*(?:['"]*)(?!['"]*data:)(.*?)(?:['"]*)\s*\)/;
-        var match = value.match(matcher);
-        return last(match);
+    function loop(cb) {
+        var matcher = /url\(\s*(?:['"]*)(?!['"]*data:)(.*?)(?:['"]*)\s*\)/gm;
+        return function (decl) {
+            var match;
+            while ((match = matcher.exec(decl.value)) !== null) {
+                cb(decl, last(match));
+            }
+        };
+    }
+
+    function compact(data) {
+        return reduce(data, function (acc, file, key) {
+            if (file && file.mime) {
+                acc[key] = file;
+            }
+            return acc;
+        }, {});
     }
 
     return function (css) {
         var replacements = {};
         var filter = /^background(?:-image)?/;
-        css.walkDecls(filter, function (decl) {
-            // Store the input file path of the file being processed
-            //  var inputPath = decl.source.input.file;
-            var url = getUrl(decl.value);
-
-            if (url && !replacements[url]) {
-                replacements[url] = resolveUrl(url);
-            }
-        });
+        css.walkDecls(filter, loop(function (decl, url) {
+            replacements[url] = resolveUrl(url);
+        }));
 
         return Promise.props(replacements)
+            .then(compact)
             .then(getDataUri)
             .then(function (data) {
-                css.walkDecls(filter, function (decl) {
-                    // Store the input file path of the file being processed
-                    //  var inputPath = decl.source.input.file;
-                    var url = getUrl(decl.value);
-
-                    if (url && data[url]) {
+                css.walkDecls(filter, loop(function (decl, url) {
+                    if (data[url]) {
                         var regexp = new RegExp('[\'"]?' + escape(url) + '[\'"]?');
                         decl.value = decl.value.replace(regexp, '\'' + data[url] + '\'');
-
-                        debug('Converted value:', decl.value );
+                        debug(url, 'successfully replaced');
+                    } else {
+                        debug(url, 'failed');
                     }
-                });
+                }));
             }).catch(function (err) {
                 debug(err.message || err);
             });

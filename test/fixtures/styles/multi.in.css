@@ -1,0 +1,11 @@
+.multi {
+  background: url(test/fixtures/images/blank.gif),
+              url(//localhost:3000/images/blank.gif),
+              url(../images/check.svg);
+}
+
+.multi {
+  background-image: url(//localhost:3000/images/check.svg),
+                    linear-gradient(to right, rgba(255, 255, 255, 0),  rgba(255, 255, 255, 1)),
+                    url(../images/blank.gif);
+}
