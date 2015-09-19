@@ -1,6 +1,6 @@
 .multi {
   background: url(test/fixtures/images/blank.gif),
-              url(//localhost:3000/images/blank.gif),
+              url(//localhost:3000/images/critical.png),
               url(../images/check.svg);
 }
 
