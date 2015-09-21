@@ -42,7 +42,7 @@ Default: `[process.cwd()]`
 Example: `['http://domain.de/', 'http://domain.de/styles', 'app/images']` 
 Required: `false`
 
-List of directories where the inliner should start looking for assets. 
+List of directories/urls where the inliner should start looking for assets. 
 You can define local directories or URLs.
 
 
