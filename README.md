@@ -48,8 +48,8 @@ You can define local directories or URLs.
 
 ####maxFileSize
 Type: `int`
-Default: 10240
-Example: 0
+Default: `10240`
+Example: `0`
 Required: `false`
 
 Sets a max file size (in bytes) for inlined images. Set to `0` to disable size checking.
