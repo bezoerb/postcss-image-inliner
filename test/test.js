@@ -27,6 +27,7 @@ var test = function (input, output, opts, done) {
         expect(result.warnings()).to.be.empty;
         done();
     }).catch(function (error) {
+        console.log(error);
         done(error);
     });
 };
@@ -69,5 +70,9 @@ describe('postcss-image-inliner', function () {
 
     it('should handle media queries', function (done) {
         test('media.in.css', 'media.out.css', { }, done);
+    });
+
+    it('should consider base64Svg option', function (done) {
+        test('b64svg.in.css', 'b64svg.out.css', { b64Svg: true, maxFileSize: 0 }, done);
     });
 });

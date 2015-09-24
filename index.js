@@ -11,11 +11,11 @@ var getResource = require('asset-resolver').getResource;
 var getDataUri = require('./lib/image').getDataUri;
 
 module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
-   // var matcher = /url\(\s*(?:['"]*)(?!['"]*data:)(.*?)(?:['"]*)\s*\)/gm;
 
     opts = defaults(opts || {}, {
         assetPaths:  [],
-        maxFileSize: 10240
+        maxFileSize: 10240,
+        b64Svg:      false
     });
 
     if (isString(opts.assetPaths)) {
@@ -31,7 +31,7 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
         if (opts.maxFileSize && opts.maxFileSize < size) {
             var msg = 'Too big.  ' + filesize(size) + ' exceeds the allowed ' + filesize(opts.maxFileSize);
             debug(msg);
-            return Promise.reject(msg);
+            return Promise.reject(new Error(msg));
         }
 
         return resource;
@@ -42,7 +42,7 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
             base:   opts.assetPaths,
             filter: assertSize
         }).catch(function (err) {
-            debug(err.message || err, filepath, 'could not be resolved');
+            debug(err.message, filepath, 'could not be resolved');
         });
     }
 
@@ -74,7 +74,9 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
 
         return Promise.props(replacements)
             .then(compact)
-            .then(getDataUri)
+            .then(function (file) {
+                return getDataUri(file, opts);
+            })
             .then(function (data) {
                 css.walkDecls(filter, loop(function (decl, url) {
                     if (data[url]) {
@@ -86,7 +88,7 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
                     }
                 }));
             }).catch(function (err) {
-                debug(err.message || err);
+                debug(err);
             });
     };
 });
