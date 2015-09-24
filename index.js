@@ -4,12 +4,11 @@ var isString = require('lodash.isstring');
 var defaults = require('lodash.defaults');
 var debug = require('debug')('image-inliner');
 var escape = require('lodash.escaperegexp');
-var map = require('lodash.map');
 var last = require('lodash.last');
 var reduce = require('lodash.reduce');
-var getResource = require('./lib/resource').getResource;
+var filesize = require('filesize');
+var getResource = require('asset-resolver').getResource;
 var getDataUri = require('./lib/image').getDataUri;
-
 
 module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
    // var matcher = /url\(\s*(?:['"]*)(?!['"]*data:)(.*?)(?:['"]*)\s*\)/gm;
@@ -25,10 +24,24 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
 
     opts.assetPaths.push(process.cwd());
 
+
+    function assertSize(resource) {
+        var encoding = resource.mime === 'image/svg+xml' ? 'utf-8' : 'binary';
+        var size = Buffer.byteLength(resource.contents, encoding);
+        if (opts.maxFileSize && opts.maxFileSize < size) {
+            var msg = 'Too big.  ' + filesize(size) + ' exceeds the allowed ' + filesize(opts.maxFileSize);
+            debug(msg);
+            return Promise.reject(msg);
+        }
+
+        return resource;
+    }
+
     function resolveUrl(filepath) {
-        return Promise.any(map(opts.assetPaths, function (base) {
-            return getResource(base, filepath, opts);
-        })).catch(function (err) {
+        return getResource(filepath, {
+            base:   opts.assetPaths,
+            filter: assertSize
+        }).catch(function (err) {
             debug(err.message || err, filepath, 'could not be resolved');
         });
     }
@@ -67,7 +80,7 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
                     if (data[url]) {
                         var regexp = new RegExp('[\'"]?' + escape(url) + '[\'"]?');
                         decl.value = decl.value.replace(regexp, '\'' + data[url] + '\'');
-                        debug(url, 'successfully replaced');
+                        debug(url, 'successfully replaced with ', data[url]);
                     } else {
                         debug(url, 'failed');
                     }

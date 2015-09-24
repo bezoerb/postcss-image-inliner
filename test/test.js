@@ -11,7 +11,7 @@ var serveStatic = require('serve-static');
 var plugin = require('../');
 
 function read(filename) {
-    return fs.readFileSync(path.join(__dirname, 'fixtures', 'styles', filename), 'utf-8');
+    return fs.readFileSync(path.join(__dirname, 'fixtures', 'styles', filename), 'utf8');
 }
 
 var test = function (input, output, opts, done) {

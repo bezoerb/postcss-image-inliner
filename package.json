@@ -9,6 +9,9 @@
     "inline",
     "image"
   ],
+  "files": [
+      "lib"
+  ],
   "author": "Ben Zörb <ben@sommerlaune.com>",
   "license": "MIT",
   "repository": "bezoerb/postcss-image-inliner",
@@ -17,6 +20,7 @@
   },
   "homepage": "https://github.com/bezoerb/postcss-image-inliner",
   "dependencies": {
+    "asset-resolver": "^0.1.1",
     "bluebird": "^2.10.0",
     "debug": "^2.2.0",
     "filesize": "^3.1.3",
