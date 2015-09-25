@@ -10,7 +10,8 @@
     "image"
   ],
   "files": [
-    "lib"
+    "lib",
+    "index.js"
   ],
   "author": "Ben Zörb <ben@sommerlaune.com>",
   "license": "MIT",
