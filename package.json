@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "chai": "3.4.1",
-    "finalhandler": "0.4.0",
+    "finalhandler": "0.4.1",
     "gulp": "3.9.0",
     "gulp-eslint": "1.1.0",
     "gulp-mocha": "2.2.0",
