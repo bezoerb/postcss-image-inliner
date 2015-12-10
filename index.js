@@ -15,7 +15,8 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
     opts = defaults(opts || {}, {
         assetPaths:  [],
         maxFileSize: 10240,
-        b64Svg:      false
+        b64Svg:      false,
+        strict:      false
     });
 
     if (isString(opts.assetPaths)) {
@@ -85,10 +86,16 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
                         debug(url, 'successfully replaced with ', data[url]);
                     } else {
                         debug(url, 'failed');
+                        if (opts.strict) {
+                            throw new Error('No file found for ' + url);
+                        }
                     }
                 }));
             }).catch(function (err) {
                 debug(err);
+                return new Promise(function (resolve, reject) {
+                    reject(err);
+                });
             });
     };
 });

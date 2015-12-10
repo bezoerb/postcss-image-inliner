@@ -27,7 +27,6 @@ var test = function (input, output, opts, done) {
         expect(result.warnings()).to.be.empty;
         done();
     }).catch(function (error) {
-        console.log(error);
         done(error);
     });
 };
@@ -74,5 +73,19 @@ describe('postcss-image-inliner', function () {
 
     it('should consider base64Svg option', function (done) {
         test('b64svg.in.css', 'b64svg.out.css', { b64Svg: true, maxFileSize: 0 }, done);
+    });
+
+    it('should do nothing on missing files in non strict mode', function (done) {
+        test('missing.in.css', 'missing.out.css', { }, done);
+    });
+
+    it('should fail on missing files in strict mode', function (done) {
+        test('missing.in.css', 'missing.out.css', { strict: true }, function (error) {
+            if (error) {
+                done();
+            } else {
+                done(new Error('Should fail'));
+            }
+        });
     });
 });

@@ -60,3 +60,10 @@ Default: `false`
 Required: `false`
 
 Use Base64 encoding for svgs.
+
+####strict
+Type: `bool`
+Default: `false`
+Required: `false`
+
+Fail on error
