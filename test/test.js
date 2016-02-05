@@ -79,6 +79,10 @@ describe('postcss-image-inliner', function () {
         test('missing.in.css', 'missing.out.css', { }, done);
     });
 
+    it('should handle content property in pseudo elements', function (done) {
+        test('content.in.css', 'content.out.css', { }, done);
+    });
+
     it('should fail on missing files in strict mode', function (done) {
         test('missing.in.css', 'missing.out.css', { strict: true }, function (error) {
             if (error) {
