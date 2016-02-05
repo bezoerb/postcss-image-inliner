@@ -79,6 +79,10 @@ describe('postcss-image-inliner', function () {
         test('missing.in.css', 'missing.out.css', { }, done);
     });
 
+    it('should handle urls used for content property', function (done) {
+        test('pseudo.in.css', 'pseudo.out.css', { }, done);
+    });
+
     it('should fail on missing files in strict mode', function (done) {
         test('missing.in.css', 'missing.out.css', { strict: true }, function (error) {
             if (error) {
