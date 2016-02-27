@@ -22,7 +22,7 @@
   "homepage": "https://github.com/bezoerb/postcss-image-inliner",
   "dependencies": {
     "asset-resolver": "0.1.1",
-    "bluebird": "3.3.1",
+    "bluebird": "3.3.3",
     "debug": "2.2.0",
     "filesize": "3.2.1",
     "lodash.defaults": "^4.0.0",
