@@ -38,7 +38,7 @@
     "object-hash": "^1.1.0",
     "postcss": "5.0.18",
     "request": "2.71.0",
-    "svgo": "0.6.4",
+    "svgo": "0.6.5",
     "then-fs": "2.0.0"
   },
   "devDependencies": {
