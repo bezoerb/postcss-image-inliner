@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/bezoerb/postcss-image-inliner",
   "dependencies": {
-    "asset-resolver": "0.1.1",
+    "asset-resolver": "0.2.0",
     "bluebird": "3.3.5",
     "debug": "2.2.0",
     "filesize": "3.3.0",
