@@ -1,5 +1,5 @@
 var postcss = require('postcss');
-var expect  = require('chai').expect;
+var expect = require('chai').expect;
 var defaults = require('lodash.defaults');
 var path = require('path');
 var fs = require('fs');
@@ -22,7 +22,7 @@ var test = function (input, output, opts, done) {
         assetPaths: ['//localhost:3000/styles/']
     });
 
-    postcss([ plugin(opts) ]).process(input).then(function (result) {
+    postcss([plugin(opts)]).process(input).then(function (result) {
         expect(result.css).to.eql(output);
         expect(result.warnings()).to.be.empty;
         done();
@@ -30,7 +30,6 @@ var test = function (input, output, opts, done) {
         done(error);
     });
 };
-
 
 function startServer(docroot) {
     var serve = serveStatic(docroot);
@@ -42,7 +41,6 @@ function startServer(docroot) {
 
     return server;
 }
-
 
 /* eslint max-len:0 */
 describe('postcss-image-inliner', function () {
@@ -56,40 +54,44 @@ describe('postcss-image-inliner', function () {
     });
 
     it('should skip too big images', function (done) {
-        test('big.css', 'big.css', { maxFileSize: 1 }, done);
+        test('big.css', 'big.css', {maxFileSize: 1}, done);
     });
 
     it('should handle multiple background images', function (done) {
-        test('multi.in.css', 'multi.out.css', { }, done);
+        test('multi.in.css', 'multi.out.css', {}, done);
     });
 
     it('should handle background shorthand', function (done) {
-        test('shorthand.in.css', 'shorthand.out.css', { }, done);
+        test('shorthand.in.css', 'shorthand.out.css', {}, done);
     });
 
     it('should handle media queries', function (done) {
-        test('media.in.css', 'media.out.css', { }, done);
+        test('media.in.css', 'media.out.css', {}, done);
     });
 
     it('should consider base64Svg option', function (done) {
-        test('b64svg.in.css', 'b64svg.out.css', { b64Svg: true, maxFileSize: 0 }, done);
+        test('b64svg.in.css', 'b64svg.out.css', {b64Svg: true, maxFileSize: 0}, done);
     });
 
     it('should do nothing on missing files in non strict mode', function (done) {
-        test('missing.in.css', 'missing.out.css', { }, done);
+        test('missing.in.css', 'missing.out.css', {}, done);
     });
 
     it('should handle urls used for content property', function (done) {
-        test('pseudo.in.css', 'pseudo.out.css', { }, done);
+        test('pseudo.in.css', 'pseudo.out.css', {}, done);
     });
 
     it('should fail on missing files in strict mode', function (done) {
-        test('missing.in.css', 'missing.out.css', { strict: true }, function (error) {
+        test('missing.in.css', 'missing.out.css', {strict: true}, function (error) {
             if (error) {
                 done();
             } else {
                 done(new Error('Should fail'));
             }
         });
+    });
+
+    it('should allow globbing', function (done) {
+        test('glob.in.css', 'glob.out.css', {assetPaths: 'test/*/images/'}, done);
     });
 });
