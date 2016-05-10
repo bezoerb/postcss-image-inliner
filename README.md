@@ -39,11 +39,11 @@ See [PostCSS] docs for examples for your environment.
 ####assetPaths
 Type: `array`
 Default: `[process.cwd()]`
-Example: `['http://domain.de/', 'http://domain.de/styles', 'app/images']`
+Example: `['http://domain.de/', 'http://domain.de/styles', 'app/images', '**/images/']`
 Required: `false`
 
 List of directories/urls where the inliner should start looking for assets.
-You can define local directories or URLs.
+You can define local directories (globs supported) or URLs.
 
 
 ####maxFileSize

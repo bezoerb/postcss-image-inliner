@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 
-var files = ['index.js', 'lib/*.js', 'test/*.js', 'gulpfile.js'];
+var files = ['index.js', 'lib/*.js'];
 
 gulp.task('lint', function () {
     var eslint = require('gulp-eslint');

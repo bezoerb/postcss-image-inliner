@@ -11,12 +11,11 @@ var getResource = require('asset-resolver').getResource;
 var getDataUri = require('./lib/image').getDataUri;
 
 module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
-
     opts = defaults(opts || {}, {
-        assetPaths:  [],
+        assetPaths: [],
         maxFileSize: 10240,
-        b64Svg:      false,
-        strict:      false
+        b64Svg: false,
+        strict: false
     });
 
     if (isString(opts.assetPaths)) {
@@ -24,7 +23,6 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
     }
 
     opts.assetPaths.push(process.cwd());
-
 
     function assertSize(resource) {
         var encoding = resource.mime === 'image/svg+xml' ? 'utf-8' : 'binary';
@@ -40,7 +38,7 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
 
     function resolveUrl(filepath) {
         return getResource(filepath, {
-            base:   opts.assetPaths,
+            base: opts.assetPaths,
             filter: assertSize
         }).catch(function (err) {
             debug(err.message, filepath, 'could not be resolved');
