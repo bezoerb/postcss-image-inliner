@@ -1,4 +1,17 @@
 
+v0.3.1 / 2016-05-10
+===================
+
+  * travis tweaks
+  * bump deps & eslint-config
+  * added glob tests
+
+v0.3.0 / 2016-02-05
+===================
+
+  * handle content property (#61)
+  * bump deps
+
 0.2.0 / 2015-12-10
 ==================
 
