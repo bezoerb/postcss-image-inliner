@@ -48,7 +48,7 @@
     "gulp": "3.9.1",
     "gulp-eslint": "2.0.0",
     "gulp-mocha": "2.2.0",
-    "serve-static": "1.10.2"
+    "serve-static": "1.10.3"
   },
   "scripts": {
     "test": "gulp"
