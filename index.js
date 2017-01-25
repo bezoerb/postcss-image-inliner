@@ -66,7 +66,7 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
 
     return function (css) {
         var replacements = {};
-        var filter = /^(background(?:-image)?)|(content)/;
+        var filter = /^(background(?:-image)?)|(content)|(cursor)/;
         css.walkDecls(filter, loop(function (decl, url) {
             replacements[url] = resolveUrl(url);
         }));
