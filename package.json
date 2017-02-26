@@ -1,6 +1,6 @@
 {
   "name": "postcss-image-inliner",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "PostCSS plugin to inline images into css",
   "keywords": [
     "postcss",
