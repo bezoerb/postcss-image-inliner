@@ -1,4 +1,37 @@
 
+v1.0.5 / 2017-02-26
+===================
+
+  * bump deps
+
+v1.0.4 / 2017-01-30
+===================
+
+  * bump deps
+  * Fix the issue with "cursor" property (#156)
+
+v1.0.3 / 2017-01-29
+===================
+
+  * bump deps
+
+v1.0.2 / 2016-11-22
+===================
+
+  * removed unnecessary escape character
+  * bump deps
+
+v1.0.1 / 2016-09-28
+===================
+
+  * bump deps
+
+v1.0.0 / 2016-09-02
+===================
+
+  * Minimum node.js version is 4.0 now due to upstream changes.
+  * bump deps
+
 v0.3.1 / 2016-05-10
 ===================
 
