@@ -37,7 +37,7 @@
     "mime": "1.3.4",
     "object-hash": "1.1.7",
     "postcss": "5.2.15",
-    "request": "2.79.0",
+    "request": "2.80.0",
     "svgo": "0.7.2",
     "then-fs": "2.0.0"
   },
