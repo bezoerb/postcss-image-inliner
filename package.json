@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "chai": "3.5.0",
-    "eslint-config-xo": "0.17.0",
+    "eslint-config-xo": "0.18.1",
     "finalhandler": "1.0.0",
     "gulp": "3.9.1",
     "gulp-eslint": "3.0.1",
