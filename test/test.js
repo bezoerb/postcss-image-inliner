@@ -1,97 +1,96 @@
-var postcss = require('postcss');
-var expect = require('chai').expect;
-var defaults = require('lodash.defaults');
-var path = require('path');
-var fs = require('fs');
+/* eslint-env node, mocha */
+const path = require('path');
+const fs = require('fs');
+const http = require('http');
+const postcss = require('postcss');
+const expect = require('chai').expect;
+const defaults = require('lodash.defaults');
+const finalhandler = require('finalhandler');
+const serveStatic = require('serve-static');
 
-var finalhandler = require('finalhandler');
-var http = require('http');
-var serveStatic = require('serve-static');
-
-var plugin = require('../');
+const plugin = require('../');
 
 function read(filename) {
-    return fs.readFileSync(path.join(__dirname, 'fixtures', 'styles', filename), 'utf8');
+  return fs.readFileSync(path.join(__dirname, 'fixtures', 'styles', filename), 'utf8');
 }
 
-var test = function (input, output, opts, done) {
-    input = read(input);
-    output = read(output);
+const test = function (input, output, opts, done) {
+  input = read(input);
+  output = read(output);
 
-    opts = defaults(opts || {}, {
-        assetPaths: ['//localhost:3000/styles/']
-    });
+  opts = defaults(opts || {}, {
+    assetPaths: ['//localhost:3000/styles/']
+  });
 
-    postcss([plugin(opts)]).process(input).then(function (result) {
-        expect(result.css).to.eql(output);
-        expect(result.warnings()).to.be.empty;
-        done();
-    }).catch(function (error) {
-        done(error);
-    });
+  postcss([plugin(opts)]).process(input).then(result => {
+    expect(result.css).to.eql(output);
+    expect(result.warnings()).to.be.empty;
+  }).then(done).catch(error => {
+    done(error);
+  });
 };
 
 function startServer(docroot) {
-    var serve = serveStatic(docroot);
-    var server = http.createServer(function (req, res) {
-        var done = finalhandler(req, res);
-        serve(req, res, done);
-    });
-    server.listen(3000);
+  const serve = serveStatic(docroot);
+  const server = http.createServer((req, res) => {
+    const done = finalhandler(req, res);
+    serve(req, res, done);
+  });
+  server.listen(3000);
 
-    return server;
+  return server;
 }
 
 /* eslint max-len:0 */
-describe('postcss-image-inliner', function () {
-    var server;
+describe('postcss-image-inliner', () => {
+  let server;
 
-    beforeEach(function () {
-        server = startServer(path.join(__dirname, 'fixtures'));
-    });
-    afterEach(function (done) {
-        server.close(done);
-    });
+  beforeEach(() => {
+    server = startServer(path.join(__dirname, 'fixtures'));
+  });
+  afterEach(done => {
+    server.close(done);
+  });
 
-    it('should skip too big images', function (done) {
-        test('big.css', 'big.css', {maxFileSize: 1}, done);
-    });
+  it('should skip too big images', done => {
+    test('big.css', 'big.css', {maxFileSize: 1}, done);
+  });
 
-    it('should handle multiple background images', function (done) {
-        test('multi.in.css', 'multi.out.css', {}, done);
-    });
+  it('should handle multiple background images', done => {
+    test('multi.in.css', 'multi.out.css', {}, done);
+  });
 
-    it('should handle background shorthand', function (done) {
-        test('shorthand.in.css', 'shorthand.out.css', {}, done);
-    });
+  it('should handle background shorthand', done => {
+    test('shorthand.in.css', 'shorthand.out.css', {}, done);
+  });
 
-    it('should handle media queries', function (done) {
-        test('media.in.css', 'media.out.css', {}, done);
-    });
+  it('should handle media queries', done => {
+    test('media.in.css', 'media.out.css', {}, done);
+  });
 
-    it('should consider base64Svg option', function (done) {
-        test('b64svg.in.css', 'b64svg.out.css', {b64Svg: true, maxFileSize: 0}, done);
-    });
+  it('should consider base64Svg option', done => {
+    test('b64svg.in.css', 'b64svg.out.css', {b64Svg: true, maxFileSize: 0}, done);
+  });
 
-    it('should do nothing on missing files in non strict mode', function (done) {
-        test('missing.in.css', 'missing.out.css', {}, done);
-    });
+  it('should do nothing on missing files in non strict mode', done => {
+    test('missing.in.css', 'missing.out.css', {}, done);
+  });
 
-    it('should handle urls used for content property', function (done) {
-        test('pseudo.in.css', 'pseudo.out.css', {}, done);
-    });
+  it('should handle urls used for content property', done => {
+    test('pseudo.in.css', 'pseudo.out.css', {}, done);
+  });
 
-    it('should fail on missing files in strict mode', function (done) {
-        test('missing.in.css', 'missing.out.css', {strict: true}, function (error) {
-            if (error) {
-                done();
-            } else {
-                done(new Error('Should fail'));
-            }
-        });
+  it('should fail on missing files in strict mode', done => {
+    test('missing.in.css', 'missing.out.css', {strict: true}, error => {
+      if (error) {
+        done();
+      } else {
+        done(new Error('Should fail'));
+      }
     });
+  });
 
-    it('should allow globbing', function (done) {
-        test('glob.in.css', 'glob.out.css', {assetPaths: 'test/*/images/'}, done);
-    });
+  it('should allow globbing', done => {
+    test('glob.in.css', 'glob.out.css', {assetPaths: 'test/*/images/'}, done);
+  });
 });

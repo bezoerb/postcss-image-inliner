@@ -1,16 +1,16 @@
-var postcss = require('postcss');
-var Promise = require('bluebird'); // jshint ignore:line
-var isString = require('lodash.isstring');
-var defaults = require('lodash.defaults');
-var debug = require('debug')('image-inliner');
-var escape = require('lodash.escaperegexp');
-var last = require('lodash.last');
-var reduce = require('lodash.reduce');
-var filesize = require('filesize');
-var getResource = require('asset-resolver').getResource;
-var getDataUri = require('./lib/image').getDataUri;
+const postcss = require('postcss');
+const Bluebird = require('bluebird');
+const isString = require('lodash.isstring');
+const defaults = require('lodash.defaults');
+const debug = require('debug')('image-inliner');
+const escape = require('lodash.escaperegexp');
+const last = require('lodash.last');
+const reduce = require('lodash.reduce');
+const filesize = require('filesize');
+const getResource = require('asset-resolver').getResource;
+const getDataUri = require('./lib/image').getDataUri;
 
-module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
+module.exports = postcss.plugin('postcss-image-inliner', opts => {
     opts = defaults(opts || {}, {
         assetPaths: [],
         maxFileSize: 10240,
@@ -25,12 +25,12 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
     opts.assetPaths.push(process.cwd());
 
     function assertSize(resource) {
-        var encoding = resource.mime === 'image/svg+xml' ? 'utf-8' : 'binary';
-        var size = Buffer.byteLength(resource.contents, encoding);
+        const encoding = resource.mime === 'image/svg+xml' ? 'utf-8' : 'binary';
+        const size = Buffer.byteLength(resource.contents, encoding);
         if (opts.maxFileSize && opts.maxFileSize < size) {
-            var msg = 'Too big.  ' + filesize(size) + ' exceeds the allowed ' + filesize(opts.maxFileSize);
+            const msg = 'Too big.  ' + filesize(size) + ' exceeds the allowed ' + filesize(opts.maxFileSize);
             debug(msg);
-            return Promise.reject(new Error(msg));
+            return Bluebird.reject(new Error(msg));
         }
 
         return resource;
@@ -40,15 +40,15 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
         return getResource(filepath, {
             base: opts.assetPaths,
             filter: assertSize
-        }).catch(function (err) {
+        }).catch(err => {
             debug(err.message, filepath, 'could not be resolved');
         });
     }
 
     function loop(cb) {
-        var matcher = /url\(\s*(?:['"]*)(?!['"]*data:)(.*?)(?:['"]*)\s*\)/gm;
+        const matcher = /url\(\s*(?:['"]*)(?!['"]*data:)(.*?)(?:['"]*)\s*\)/gm;
         return function (decl) {
-            var match;
+            let match;
             while ((match = matcher.exec(decl.value)) !== null) {
                 cb(decl, last(match));
             }
@@ -56,7 +56,7 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
     }
 
     function compact(data) {
-        return reduce(data, function (acc, file, key) {
+        return reduce(data, (acc, file, key) => {
             if (file && file.mime) {
                 acc[key] = file;
             }
@@ -65,21 +65,21 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
     }
 
     return function (css) {
-        var replacements = {};
-        var filter = /^(background(?:-image)?)|(content)|(cursor)/;
-        css.walkDecls(filter, loop(function (decl, url) {
+        const replacements = {};
+        const filter = /^(background(?:-image)?)|(content)|(cursor)/;
+        css.walkDecls(filter, loop((decl, url) => {
             replacements[url] = resolveUrl(url);
         }));
 
-        return Promise.props(replacements)
+        return Bluebird.props(replacements)
             .then(compact)
-            .then(function (file) {
+            .then(file => {
                 return getDataUri(file, opts);
             })
-            .then(function (data) {
-                css.walkDecls(filter, loop(function (decl, url) {
+            .then(data => {
+                css.walkDecls(filter, loop((decl, url) => {
                     if (data[url]) {
-                        var regexp = new RegExp('[\'"]?' + escape(url) + '[\'"]?');
+                        const regexp = new RegExp('[\'"]?' + escape(url) + '[\'"]?');
                         decl.value = decl.value.replace(regexp, '\'' + data[url] + '\'');
                         debug(url, 'successfully replaced with ', data[url]);
                     } else {
@@ -89,9 +89,9 @@ module.exports = postcss.plugin('postcss-image-inliner', function (opts) {
                         }
                     }
                 }));
-            }).catch(function (err) {
+            }).catch(err => {
                 debug(err);
-                return new Promise(function (resolve, reject) {
+                return new Bluebird((resolve, reject) => {
                     reject(err);
                 });
             });
