@@ -1,3 +1,4 @@
+'use strict';
 const postcss = require('postcss');
 const Bluebird = require('bluebird');
 const isString = require('lodash.isstring');
