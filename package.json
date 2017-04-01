@@ -48,7 +48,7 @@
     "finalhandler": "1.0.0",
     "gulp": "3.9.1",
     "gulp-eslint": "3.0.1",
-    "gulp-mocha": "4.1.0",
+    "gulp-mocha": "4.3.0",
     "mocha": "3.2.0",
     "serve-static": "1.12.1"
   },
