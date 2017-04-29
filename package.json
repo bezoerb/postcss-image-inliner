@@ -24,7 +24,7 @@
     "asset-resolver": "0.3.3",
     "bluebird": "3.5.0",
     "debug": "2.6.4",
-    "filesize": "3.5.6",
+    "filesize": "3.5.8",
     "lodash.defaults": "4.2.0",
     "lodash.escaperegexp": "4.1.2",
     "lodash.isstring": "4.0.1",
