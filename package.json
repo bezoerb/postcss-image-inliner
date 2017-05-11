@@ -34,7 +34,7 @@
     "lodash.reduce": "4.6.0",
     "lodash.reject": "4.6.0",
     "lodash.result": "4.5.2",
-    "mime": "1.3.4",
+    "mime": "1.3.5",
     "object-hash": "1.1.8",
     "postcss": "5.2.17",
     "request": "2.81.0",
