@@ -42,7 +42,7 @@
     "then-fs": "2.0.0"
   },
   "devDependencies": {
-    "chai": "3.5.0",
+    "chai": "4.0.0",
     "eslint": "3.19.0",
     "eslint-config-xo": "0.18.2",
     "finalhandler": "1.0.3",
