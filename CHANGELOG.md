@@ -2,6 +2,12 @@
 v1.0.6 / 2017-02-26
 ==================
 
+  * Drop support for node < 6
+  * Bump dependencies
+
+v1.0.6 / 2017-02-26
+==================
+
   * Add peer dependency
 
 v1.0.5 / 2017-02-26
