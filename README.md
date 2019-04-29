@@ -37,35 +37,35 @@ postcss([ imageInliner(opts) ])
 
 See [PostCSS] docs for examples for your environment.
 
-##Options
-####assetPaths
-Type: `array`
-Default: `[process.cwd()]`
-Example: `['http://domain.de/', 'http://domain.de/styles', 'app/images', '**/images/']`
-Required: `false`
+## Options
+#### assetPaths
+Type: `array`<br/>
+Default: `[process.cwd()]`<br/>
+Example: `['http://domain.de/', 'http://domain.de/styles', 'app/images', '**/images/']`<br/>
+Required: `false`<br/>
 
 List of directories/urls where the inliner should start looking for assets.
 You can define local directories (globs supported) or URLs.
 
 
-####maxFileSize
-Type: `int`
-Default: `10240`
-Example: `0`
-Required: `false`
+#### maxFileSize
+Type: `int`<br/>
+Default: `10240`<br/>
+Example: `0`<br/>
+Required: `false`<br/>
 
 Sets a max file size (in bytes) for inlined images. Set to `0` to disable size checking.
 
-####b64Svg
-Type: `bool`
-Default: `false`
-Required: `false`
+#### b64Svg
+Type: `bool`<br/>
+Default: `false`<br/>
+Required: `false`<br/>
 
 Use Base64 encoding for svgs.
 
-####strict
-Type: `bool`
-Default: `false`
-Required: `false`
+#### strict
+Type: `bool`<br/>
+Default: `false`<br/>
+Required: `false`<br/>
 
 Fail on error
