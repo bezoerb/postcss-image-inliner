@@ -1,13 +1,27 @@
 
-v1.0.6 / 2017-02-26
-==================
+v3.0.1 / 2019-06-14
+===================
+
+  * Test node 12
+  * Bump dependencies
+
+v3.0.0 / 2019-01-19
+===================
+
+  * Rewrite
+  * Drop node support < 8
+
+v2.0.0 / 2017-12-17
+===================
 
   * Drop support for node < 6
   * Bump dependencies
+  * Add strict mode
 
 v1.0.6 / 2017-02-26
 ==================
 
+  * Bump dependencies
   * Add peer dependency
 
 v1.0.5 / 2017-02-26
