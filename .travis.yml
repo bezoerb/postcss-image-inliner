@@ -1,6 +1,11 @@
-sudo: false
 language: node_js
+
+git:
+  depth: 5
+
 node_js:
-  - '12'
-  - '10'
-  - '8'
+  - "8"
+  - "10"
+  - "12"
+
+cache: npm
