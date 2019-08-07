@@ -37,7 +37,9 @@
     "serve-static": "^1.14.1"
   },
   "scripts": {
-    "test": "eslint *.js && mocha test/*.js"
+    "eslint": "eslint .",
+    "mocha": "mocha",
+    "test": "npm run eslint && npm run mocha"
   },
   "prettier": {
     "trailingComma": "es5",
