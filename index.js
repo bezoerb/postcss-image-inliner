@@ -1,3 +1,5 @@
+'use strict';
+
 const postcss = require('postcss');
 const debug = require('debug')('image-inliner');
 const last = require('lodash/last');
@@ -42,21 +44,14 @@ module.exports = postcss.plugin('postcss-image-inliner', (opts = {}) => {
       filter,
       loop(({decl, url}) => {
         if (mapping[url]) {
-          const regexp = new RegExp('[\'"]?' + escapeRegExp(url) + '[\'"]?', 'gm');
-          if (url.startsWith('//')) {
-            //       Console.log({url, regexp, val: decl.value});
-          }
+          const regexp = new RegExp(`['"]?${escapeRegExp(url)}['"]?`, 'gm');
 
-          decl.value = decl.value.replace(regexp, '\'' + mapping[url] + '\'');
-          if (url.startsWith('//')) {
-            //       Console.log('RESULT: ', decl.value);
-          }
-
+          decl.value = decl.value.replace(regexp, `'${mapping[url]}'`);
           debug(url, 'successfully replaced with ', mapping[url]);
         } else {
           debug(url, 'failed');
           if (opts.strict) {
-            throw new Error('No file found for ' + url);
+            throw new Error(`No file found for ${url}`);
           }
         }
       })

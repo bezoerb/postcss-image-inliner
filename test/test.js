@@ -1,4 +1,7 @@
-/* eslint-env node, mocha */
+/* eslint-env mocha */
+
+'use strict';
+
 const path = require('path');
 const fs = require('fs');
 const http = require('http');
@@ -10,10 +13,10 @@ const serveStatic = require('serve-static');
 const plugin = require('../');
 
 function read(filename) {
-  return fs.readFileSync(path.join(__dirname, 'fixtures', 'styles', filename), 'utf8');
+  return fs.readFileSync(path.join(__dirname, 'fixtures/styles', filename), 'utf8');
 }
 
-const test = function (input, output, opts = {}, done) {
+const test = (input, output, opts = {}, done) => {
   input = read(input);
   output = read(output);
 
@@ -42,7 +45,6 @@ function startServer(docroot) {
   return server;
 }
 
-/* eslint max-len:0 */
 describe('postcss-image-inliner', () => {
   let server;
 
