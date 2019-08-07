@@ -46,14 +46,13 @@
     "eslint": "^4.19.1",
     "eslint-config-xo": "^0.19.0",
     "finalhandler": "^1.1.2",
-    "gulp": "^3.9.1",
-    "gulp-eslint": "^4.0.0",
-    "gulp-mocha": "^4.3.1",
     "mocha": "^4.1.0",
     "serve-static": "^1.14.1"
   },
   "scripts": {
-    "test": "gulp"
+    "eslint": "eslint .",
+    "mocha": "mocha",
+    "test": "npm run eslint && npm run mocha"
   },
   "engines": {
     "node": ">=6.0"
