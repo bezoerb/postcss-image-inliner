@@ -12,7 +12,7 @@ environment:
 
 install:
   - ps: Install-Product node $env:NODEJS_VERSION $env:PLATFORM
-  - npm ci
+  - if "%NODEJS_VERSION%" lss "8" (npm install) else (npm ci)
 
 build: off
 
@@ -26,3 +26,4 @@ matrix:
 
 cache:
   - '%APPDATA%\npm-cache\ -> appveyor.yml,package.json,package-lock.json'
+  - 'node_modules\ -> appveyor.yml,package.json,package-lock.json'
