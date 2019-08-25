@@ -2,7 +2,6 @@
 
 const postcss = require('postcss');
 const debug = require('debug')('image-inliner');
-const last = require('lodash/last');
 const escapeRegExp = require('lodash/escapeRegExp');
 const {getDataUriMapping} = require('./lib/image');
 
@@ -18,7 +17,7 @@ const loop = cb => {
   return decl => {
     let match;
     while ((match = matcher.exec(decl.value)) !== null) {
-      cb({decl, url: last(match)});
+      cb({decl, url: match[match.length - 1]});
     }
   };
 };
