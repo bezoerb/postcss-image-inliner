@@ -2,7 +2,7 @@
 
 const postcss = require('postcss');
 const debug = require('debug')('image-inliner');
-const escapeRegExp = require('lodash/escapeRegExp');
+const escapeRegExp = require('escape-string-regexp');
 const {getDataUriMapping} = require('./lib/image');
 
 const DEFAULTS = {
