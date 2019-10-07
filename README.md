@@ -1,12 +1,10 @@
-# PostCSS Image Inliner [![Build Status][ci-img]][ci] [![Windows Build Status][winci-img]][winci]
+# PostCSS Image Inliner [![Build Status][ci-img]][ci]
 
 [PostCSS] plugin to inline local/remote images.
 
 [PostCSS]: https://github.com/postcss/postcss
-[ci-img]: https://travis-ci.org/bezoerb/postcss-image-inliner.svg
-[ci]: https://travis-ci.org/bezoerb/postcss-image-inliner
-[winci-img]: https://ci.appveyor.com/api/projects/status/5xaq0ord84y5ho0c?svg=true
-[winci]: https://ci.appveyor.com/project/bezoerb/postcss-image-inliner
+[ci-img]: https://github.com/bezoerb/inline-critical/workflows/Tests/badge.svg
+[ci]: https://github.com/bezoerb/inline-critical/actions?workflow=Tests
 
 ```css
 .foo {
