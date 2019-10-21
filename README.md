@@ -3,8 +3,8 @@
 [PostCSS] plugin to inline local/remote images.
 
 [PostCSS]: https://github.com/postcss/postcss
-[ci-img]: https://github.com/bezoerb/inline-critical/workflows/Tests/badge.svg
-[ci]: https://github.com/bezoerb/inline-critical/actions?workflow=Tests
+[ci-img]: https://github.com/bezoerb/postcss-image-inliner/workflows/Tests/badge.svg
+[ci]: https://github.com/bezoerb/postcss-image-inliner/actions?workflow=Tests
 
 ```css
 .foo {
