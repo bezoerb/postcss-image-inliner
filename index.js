@@ -61,6 +61,7 @@ module.exports = postcss.plugin('postcss-image-inliner', opts => {
             if (file && file.mime) {
                 acc[key] = file;
             }
+
             return acc;
         }, {});
     }

@@ -23,7 +23,7 @@ const test = function (input, output, opts, done) {
         assetPaths: ['//localhost:3000/styles/']
     });
 
-    postcss([plugin(opts)]).process(input).then(result => {
+    postcss([plugin(opts)]).process(input, {from: undefined}).then(result => {
         assert.equal(result.css, output);
         assert.isEmpty(result.warnings());
     }).then(done).catch(err => {
