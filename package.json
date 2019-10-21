@@ -21,8 +21,8 @@
   },
   "homepage": "https://github.com/bezoerb/postcss-image-inliner",
   "dependencies": {
-    "asset-resolver": "^1.0.5",
-    "bluebird": "^3.7.0",
+    "asset-resolver": "^1.0.6",
+    "bluebird": "^3.7.1",
     "debug": "^4.1.1",
     "filesize": "^3.6.1",
     "lodash.defaults": "^4.2.0",
@@ -46,7 +46,7 @@
     "eslint": "^5.16.0",
     "eslint-config-xo": "^0.26.0",
     "finalhandler": "^1.1.2",
-    "mocha": "^6.2.1",
+    "mocha": "^6.2.2",
     "serve-static": "^1.14.1"
   },
   "scripts": {
