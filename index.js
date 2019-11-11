@@ -9,7 +9,7 @@ const DEFAULTS = {
   assetPaths: [],
   maxFileSize: 10240,
   b64Svg: false,
-  strict: false
+  strict: false,
 };
 
 const loop = cb => {
@@ -35,7 +35,10 @@ module.exports = postcss.plugin('postcss-image-inliner', (opts = {}) => {
     const urls = new Set([]);
     const filter = /^(background(?:-image)?)|(content)|(cursor)/;
     // Get urls
-    css.walkDecls(filter, loop(({url}) => urls.add(url)));
+    css.walkDecls(
+      filter,
+      loop(({url}) => urls.add(url))
+    );
 
     const mapping = await getDataUriMapping([...urls], options);
 

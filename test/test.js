@@ -6,11 +6,11 @@ const path = require('path');
 const fs = require('fs');
 const http = require('http');
 const postcss = require('postcss');
-const assert = require('chai').assert;
+const {assert} = require('chai');
 const finalhandler = require('finalhandler');
 const serveStatic = require('serve-static');
 
-const plugin = require('../');
+const plugin = require('..');
 
 function read(filename) {
   return fs.readFileSync(path.join(__dirname, 'fixtures/styles', filename), 'utf8');
@@ -29,8 +29,8 @@ const test = (input, output, opts = {}, done) => {
       assert.isEmpty(result.warnings());
     })
     .then(done)
-    .catch(err => {
-      done(err);
+    .catch(error => {
+      done(error);
     });
 };
 
