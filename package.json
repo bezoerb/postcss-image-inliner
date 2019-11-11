@@ -27,7 +27,6 @@
     "filesize": "^3.6.1",
     "lodash.defaults": "^4.2.0",
     "lodash.escaperegexp": "^4.1.2",
-    "lodash.isstring": "^4.0.1",
     "lodash.map": "^4.6.0",
     "lodash.reduce": "^4.6.0",
     "postcss": "^7.0.21",
@@ -35,16 +34,21 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "eslint": "^5.16.0",
-    "eslint-config-xo": "^0.26.0",
     "finalhandler": "^1.1.2",
     "mocha": "^6.2.2",
-    "serve-static": "^1.14.1"
+    "serve-static": "^1.14.1",
+    "xo": "^0.24.0"
   },
   "scripts": {
-    "eslint": "eslint .",
+    "xo": "xo",
     "mocha": "mocha",
-    "test": "npm run eslint && npm run mocha"
+    "test": "npm run xo && npm run mocha"
+  },
+  "xo": {
+    "space": 4,
+    "rules": {
+      "capitalized-comments": "off"
+    }
   },
   "engines": {
     "node": ">=6.0"
