@@ -30,16 +30,15 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "eslint": "^6.6.0",
-    "eslint-config-xo-space": "^0.21.0",
     "finalhandler": "^1.1.2",
     "mocha": "^6.2.2",
-    "serve-static": "^1.14.1"
+    "serve-static": "^1.14.1",
+    "xo": "^0.25.3"
   },
   "scripts": {
-    "eslint": "eslint .",
+    "xo": "xo",
     "mocha": "mocha",
-    "test": "npm run eslint && npm run mocha"
+    "test": "npm run xo && npm run mocha"
   },
   "prettier": {
     "trailingComma": "es5",
@@ -47,8 +46,14 @@
     "printWidth": 120,
     "bracketSpacing": false
   },
-  "eslintConfig": {
-    "extends": "xo-space"
+  "xo": {
+    "space": 2,
+    "prettier": true,
+    "rules": {
+      "capitalized-comments": "off",
+      "default-param-last": "off",
+      "promise/prefer-await-to-then": "off"
+    }
   },
   "engines": {
     "node": ">=8.6"
