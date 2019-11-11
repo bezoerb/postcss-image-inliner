@@ -1,14 +1,13 @@
 'use strict';
 const postcss = require('postcss');
 const Bluebird = require('bluebird');
-const isString = require('lodash.isstring');
-const defaults = require('lodash.defaults');
 const debug = require('debug')('image-inliner');
+const defaults = require('lodash.defaults');
 const escape = require('lodash.escaperegexp');
 const reduce = require('lodash.reduce');
 const filesize = require('filesize');
-const getResource = require('asset-resolver').getResource;
-const getDataUri = require('./lib/image').getDataUri;
+const {getResource} = require('asset-resolver');
+const {getDataUri} = require('./lib/image');
 
 module.exports = postcss.plugin('postcss-image-inliner', opts => {
     opts = defaults(opts || {}, {
@@ -18,7 +17,7 @@ module.exports = postcss.plugin('postcss-image-inliner', opts => {
         strict: false
     });
 
-    if (isString(opts.assetPaths)) {
+    if (!Array.isArray(opts.assetPaths)) {
         opts.assetPaths = [opts.assetPaths];
     }
 
@@ -28,7 +27,7 @@ module.exports = postcss.plugin('postcss-image-inliner', opts => {
         const encoding = resource.mime === 'image/svg+xml' ? 'utf-8' : 'binary';
         const size = Buffer.byteLength(resource.contents, encoding);
         if (opts.maxFileSize && opts.maxFileSize < size) {
-            const msg = 'Too big.  ' + filesize(size) + ' exceeds the allowed ' + filesize(opts.maxFileSize);
+            const msg = `Too big.  ${filesize(size)} exceeds the allowed ${filesize(opts.maxFileSize)}`;
             debug(msg);
             return Bluebird.reject(new Error(msg));
         }
@@ -40,14 +39,14 @@ module.exports = postcss.plugin('postcss-image-inliner', opts => {
         return getResource(filepath, {
             base: opts.assetPaths,
             filter: assertSize
-        }).catch(err => {
-            debug(err.message, filepath, 'could not be resolved');
+        }).catch(error => {
+            debug(error.message, filepath, 'could not be resolved');
         });
     }
 
     function loop(cb) {
         const matcher = /url\(\s*(?:['"]*)(?!['"]*data:)(.*?)(?:['"]*)\s*\)/gm;
-        return function (decl) {
+        return decl => {
             let match;
             while ((match = matcher.exec(decl.value)) !== null) {
                 cb(decl, match[match.length - 1]);
@@ -65,7 +64,7 @@ module.exports = postcss.plugin('postcss-image-inliner', opts => {
         }, {});
     }
 
-    return function (css) {
+    return css => {
         const replacements = {};
         const filter = /^(background(?:-image)?)|(content)|(cursor)/;
         css.walkDecls(filter, loop((decl, url) => {
@@ -80,20 +79,20 @@ module.exports = postcss.plugin('postcss-image-inliner', opts => {
             .then(data => {
                 css.walkDecls(filter, loop((decl, url) => {
                     if (data[url]) {
-                        const regexp = new RegExp('[\'"]?' + escape(url) + '[\'"]?');
-                        decl.value = decl.value.replace(regexp, '\'' + data[url] + '\'');
+                        const regexp = new RegExp(`['"]?${escape(url)}['"]?`);
+                        decl.value = decl.value.replace(regexp, `'${data[url]}'`);
                         debug(url, 'successfully replaced with ', data[url]);
                     } else {
                         debug(url, 'failed');
                         if (opts.strict) {
-                            throw new Error('No file found for ' + url);
+                            throw new Error(`No file found for ${url}`);
                         }
                     }
                 }));
-            }).catch(err => {
-                debug(err);
+            }).catch(error => {
+                debug(error);
                 return new Bluebird((resolve, reject) => {
-                    reject(err);
+                    reject(error);
                 });
             });
     };
