@@ -5,7 +5,6 @@ const isString = require('lodash.isstring');
 const defaults = require('lodash.defaults');
 const debug = require('debug')('image-inliner');
 const escape = require('lodash.escaperegexp');
-const last = require('lodash.last');
 const reduce = require('lodash.reduce');
 const filesize = require('filesize');
 const getResource = require('asset-resolver').getResource;
@@ -51,7 +50,7 @@ module.exports = postcss.plugin('postcss-image-inliner', opts => {
         return function (decl) {
             let match;
             while ((match = matcher.exec(decl.value)) !== null) {
-                cb(decl, last(match));
+                cb(decl, match[match.length - 1]);
             }
         };
     }
