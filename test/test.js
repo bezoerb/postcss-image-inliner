@@ -4,18 +4,18 @@ const path = require('path');
 const fs = require('fs');
 const http = require('http');
 const postcss = require('postcss');
-const assert = require('chai').assert;
+const {assert} = require('chai');
 const defaults = require('lodash.defaults');
 const finalhandler = require('finalhandler');
 const serveStatic = require('serve-static');
 
-const plugin = require('../');
+const plugin = require('..');
 
 function read(filename) {
     return fs.readFileSync(path.join(__dirname, 'fixtures', 'styles', filename), 'utf8');
 }
 
-const test = function (input, output, opts, done) {
+const test = (input, output, opts, done) => {
     input = read(input);
     output = read(output);
 
@@ -26,8 +26,8 @@ const test = function (input, output, opts, done) {
     postcss([plugin(opts)]).process(input, {from: undefined}).then(result => {
         assert.equal(result.css, output);
         assert.isEmpty(result.warnings());
-    }).then(done).catch(err => {
-        done(err);
+    }).then(done).catch(error => {
+        done(error);
     });
 };
 
