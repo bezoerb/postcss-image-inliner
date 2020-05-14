@@ -12,9 +12,9 @@ const DEFAULTS = {
   strict: false,
 };
 
-const loop = cb => {
-  const matcher = /url\(\s*(?:['"]*)(?!['"]*data:)(.*?)(?:['"]*)\s*\)/gm;
-  return decl => {
+const loop = (cb) => {
+  const matcher = /url\(\s*['"]*(?!['"]*data:)(.*?)['"]*\s*\)/gm;
+  return (decl) => {
     let match;
     while ((match = matcher.exec(decl.value)) !== null) {
       cb({decl, url: match[match.length - 1]});
@@ -22,8 +22,8 @@ const loop = cb => {
   };
 };
 
-module.exports = postcss.plugin('postcss-image-inliner', (opts = {}) => {
-  const options = {...DEFAULTS, ...opts};
+module.exports = postcss.plugin('postcss-image-inliner', (options_ = {}) => {
+  const options = {...DEFAULTS, ...options_};
 
   if (Array.isArray(options.assetPaths)) {
     options.assetPaths = [...options.assetPaths, process.cwd()];
@@ -31,7 +31,7 @@ module.exports = postcss.plugin('postcss-image-inliner', (opts = {}) => {
     options.assetPaths = [options.assetPaths, process.cwd()];
   }
 
-  return async css => {
+  return async (css) => {
     const urls = new Set([]);
     const filter = /^(background(?:-image)?)|(content)|(cursor)/;
     // Get urls
@@ -52,7 +52,7 @@ module.exports = postcss.plugin('postcss-image-inliner', (opts = {}) => {
           debug(url, 'successfully replaced with ', mapping[url]);
         } else {
           debug(url, 'failed');
-          if (opts.strict) {
+          if (options_.strict) {
             throw new Error(`No file found for ${url}`);
           }
         }
