@@ -72,3 +72,11 @@ Use Base64 encoding for SVGs.
 * Required: `false`
 
 Fail on error.
+
+#### filter
+
+* Type: `regex`
+* Default: `/^(background(?:-image)?)|(content)|(cursor)/`
+* Required: `false`
+
+Regex to match the CSS properties to be inlined.
