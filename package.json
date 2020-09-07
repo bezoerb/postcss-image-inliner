@@ -21,19 +21,19 @@
   },
   "homepage": "https://github.com/bezoerb/postcss-image-inliner",
   "dependencies": {
-    "asset-resolver": "^3.0.2",
+    "asset-resolver": "^3.0.4",
     "debug": "^4.1.1",
     "escape-string-regexp": "^4.0.0",
     "filesize": "^6.1.0",
-    "postcss": "^7.0.31",
+    "postcss": "^7.0.32",
     "svgo": "^1.3.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "finalhandler": "^1.1.2",
-    "mocha": "^7.2.0",
+    "mocha": "^8.1.3",
     "serve-static": "^1.14.1",
-    "xo": "^0.30.0"
+    "xo": "^0.33.1"
   },
   "scripts": {
     "xo": "xo",
