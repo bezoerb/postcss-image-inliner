@@ -10,6 +10,7 @@ const DEFAULTS = {
   maxFileSize: 10240,
   b64Svg: false,
   strict: false,
+  filter: /^(background(?:-image)?)|(content)|(cursor)/,
 };
 
 const loop = (cb) => {
@@ -33,7 +34,7 @@ module.exports = postcss.plugin('postcss-image-inliner', (options_ = {}) => {
 
   return async (css) => {
     const urls = new Set([]);
-    const filter = /^(background(?:-image)?)|(content)|(cursor)/;
+    const {filter} = options;
     // Get urls
     css.walkDecls(
       filter,
