@@ -19,6 +19,7 @@ const DEFAULTS = {
       },
     },
   ],
+  largeFileCallback: undefined,
 };
 
 const loop = (cb) => {
@@ -31,7 +32,7 @@ const loop = (cb) => {
   };
 };
 
-const escapeRegExp = string => string.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d');
+const escapeRegExp = (string) => string.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d');
 
 module.exports = (options_ = {}) => {
   const options = {...DEFAULTS, ...options_};
