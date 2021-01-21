@@ -59,6 +59,14 @@ describe('postcss-image-inliner', () => {
     test('big.css', 'big.css', {maxFileSize: 1}, done);
   });
 
+  it('should trigger callback on too big images', (done) => {
+    const largeFileCallback = (file) => {
+      return file.path.replace('http://localhost:3000/', 'https://cdn.example.com/');
+    };
+
+    test('big.css', 'big.modified.css', {maxFileSize: 1, largeFileCallback}, done);
+  });
+
   it('should handle multiple background images', (done) => {
     test('multi.in.css', 'multi.out.css', {}, done);
   });
