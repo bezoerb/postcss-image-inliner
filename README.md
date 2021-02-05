@@ -64,8 +64,6 @@ Sets a max file size (in bytes) for inlined images. Set to `0` to disable size c
 * Example: `function (file) { console.log('big file found:', file.path); return file.path }`
 * Required: `false`
 
-Allows you to act on large files and change the url if you'd like. Make sure you have `strict` set to `false` when using this.
-
 #### b64Svg
 
 * Type: `bool`
