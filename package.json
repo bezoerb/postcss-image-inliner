@@ -25,7 +25,6 @@
     "debug": "^4.3.1",
     "escape-string-regexp": "^4.0.0",
     "filesize": "^6.1.0",
-    "postcss": "^8.3.0",
     "svgo": "^1.3.2"
   },
   "devDependencies": {
@@ -33,7 +32,11 @@
     "finalhandler": "^1.1.2",
     "mocha": "^8.2.1",
     "serve-static": "^1.14.1",
+    "postcss": "^8.3.0",
     "xo": "^0.39.1"
+  },
+  "peerDependencies": {
+    "postcss": "^8.3.0"
   },
   "scripts": {
     "xo": "xo",

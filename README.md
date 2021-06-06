@@ -20,6 +20,13 @@
 }
 ```
 
+
+## Installation
+
+```bash
+npm i -D postcss postcss-image-inliner
+```
+
 ## Usage
 
 ```js

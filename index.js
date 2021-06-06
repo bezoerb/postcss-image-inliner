@@ -1,6 +1,5 @@
 'use strict';
 
-const postcss = require('postcss');
 const debug = require('debug')('image-inliner');
 const escapeRegExp = require('escape-string-regexp');
 const {getDataUriMapping} = require('./lib/image');
@@ -22,39 +21,44 @@ const loop = (cb) => {
   };
 };
 
-module.exports = postcss.plugin('postcss-image-inliner', (options_ = {}) => {
+module.exports = (options_ = {}) => {
   const options = {...DEFAULTS, ...options_};
 
   options.assetPaths = Array.isArray(options.assetPaths)
     ? [...options.assetPaths, process.cwd()]
     : [options.assetPaths, process.cwd()];
 
-  return async (css) => {
-    const urls = new Set([]);
-    const filter = /^(background(?:-image)?)|(content)|(cursor)/;
-    // Get urls
-    css.walkDecls(
-      filter,
-      loop(({url}) => urls.add(url))
-    );
+  return {
+    postcssPlugin: 'postcss-image-inliner',
+    async Once(root) {
+      const urls = new Set([]);
+      const filter = /^(background(?:-image)?)|(content)|(cursor)/;
+      // Get urls
+      root.walkDecls(
+        filter,
+        loop(({url}) => urls.add(url))
+      );
 
-    const mapping = await getDataUriMapping([...urls], options);
+      const mapping = await getDataUriMapping([...urls], options);
 
-    css.walkDecls(
-      filter,
-      loop(({decl, url}) => {
-        if (mapping[url]) {
-          const regexp = new RegExp(`['"]?${escapeRegExp(url)}['"]?`, 'gm');
+      root.walkDecls(
+        filter,
+        loop(({decl, url}) => {
+          if (mapping[url]) {
+            const regexp = new RegExp(`['"]?${escapeRegExp(url)}['"]?`, 'gm');
 
-          decl.value = decl.value.replace(regexp, `'${mapping[url]}'`);
-          debug(url, 'successfully replaced with ', mapping[url]);
-        } else {
-          debug(url, 'failed');
-          if (options_.strict) {
-            throw new Error(`No file found for ${url}`);
+            decl.value = decl.value.replace(regexp, `'${mapping[url]}'`);
+            debug(url, 'successfully replaced with ', mapping[url]);
+          } else {
+            debug(url, 'failed');
+            if (options_.strict) {
+              throw new Error(`No file found for ${url}`);
+            }
           }
-        }
-      })
-    );
+        })
+      );
+    },
   };
-});
+};
+
+module.exports.postcss = true;
