@@ -25,11 +25,9 @@ const loop = (cb) => {
 module.exports = postcss.plugin('postcss-image-inliner', (options_ = {}) => {
   const options = {...DEFAULTS, ...options_};
 
-  if (Array.isArray(options.assetPaths)) {
-    options.assetPaths = [...options.assetPaths, process.cwd()];
-  } else {
-    options.assetPaths = [options.assetPaths, process.cwd()];
-  }
+  options.assetPaths = Array.isArray(options.assetPaths)
+    ? [...options.assetPaths, process.cwd()]
+    : [options.assetPaths, process.cwd()];
 
   return async (css) => {
     const urls = new Set([]);

@@ -25,7 +25,7 @@
     "debug": "^4.3.1",
     "escape-string-regexp": "^4.0.0",
     "filesize": "^6.1.0",
-    "postcss": "^7.0.32",
+    "postcss": "^8.3.0",
     "svgo": "^1.3.2"
   },
   "devDependencies": {
@@ -33,7 +33,7 @@
     "finalhandler": "^1.1.2",
     "mocha": "^8.2.1",
     "serve-static": "^1.14.1",
-    "xo": "^0.36.1"
+    "xo": "^0.39.1"
   },
   "scripts": {
     "xo": "xo",
@@ -52,10 +52,11 @@
     "rules": {
       "capitalized-comments": "off",
       "default-param-last": "off",
-      "promise/prefer-await-to-then": "off"
+      "promise/prefer-await-to-then": "off",
+      "import/extensions": 0
     }
   },
   "engines": {
-    "node": ">=10"
+    "node": "^10 || ^12 || >=14"
   }
 }
