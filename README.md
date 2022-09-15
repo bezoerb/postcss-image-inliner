@@ -72,6 +72,14 @@ Sets a max file size (in bytes) for inlined images. Set to `0` to disable size c
 
 Use Base64 encoding for SVGs.
 
+#### svgoPlugins
+
+* Type: `array`
+* Default: `[]`
+* Required: `false`
+
+Use custom svgo configuration for svg optimization
+
 #### strict
 
 * Type: `bool`
