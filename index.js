@@ -1,7 +1,6 @@
 'use strict';
 
 const debug = require('debug')('image-inliner');
-const escapeRegExp = require('escape-string-regexp');
 const {getDataUriMapping} = require('./lib/image');
 
 const DEFAULTS = {
@@ -9,6 +8,16 @@ const DEFAULTS = {
   maxFileSize: 10240,
   b64Svg: false,
   strict: false,
+  svgoPlugins: [
+    {
+      name: 'preset-default',
+      params: {
+        overrides: {
+          removeViewBox: false,
+        },
+      },
+    },
+  ],
 };
 
 const loop = (cb) => {
@@ -40,6 +49,7 @@ module.exports = (options_ = {}) => {
       );
 
       const mapping = await getDataUriMapping([...urls], options);
+      const {default: escapeRegExp} = await import('escape-string-regexp');
 
       root.walkDecls(
         filter,
