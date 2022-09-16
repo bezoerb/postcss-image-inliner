@@ -30,6 +30,8 @@ const loop = (cb) => {
   };
 };
 
+const escapeRegExp = string => string.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d');
+
 module.exports = (options_ = {}) => {
   const options = {...DEFAULTS, ...options_};
 
@@ -49,7 +51,6 @@ module.exports = (options_ = {}) => {
       );
 
       const mapping = await getDataUriMapping([...urls], options);
-      const {default: escapeRegExp} = await import('escape-string-regexp');
 
       root.walkDecls(
         filter,

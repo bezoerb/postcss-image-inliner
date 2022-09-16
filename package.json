@@ -23,7 +23,6 @@
   "dependencies": {
     "asset-resolver": "^3.0.5",
     "debug": "^4.3.4",
-    "escape-string-regexp": "^5.0.0",
     "filesize": "^9.0.11",
     "svgo": "^2.8.0"
   },
