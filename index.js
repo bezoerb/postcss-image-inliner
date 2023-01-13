@@ -8,6 +8,7 @@ const DEFAULTS = {
   maxFileSize: 10240,
   b64Svg: false,
   strict: false,
+  largeFileCallback: undefined,
   svgoPlugins: [
     {
       name: 'preset-default',
