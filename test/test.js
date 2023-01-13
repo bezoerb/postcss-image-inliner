@@ -60,9 +60,7 @@ describe('postcss-image-inliner', () => {
   });
 
   it('should trigger callback for large images', (done) => {
-    const largeFileCallback = (file) => {
-      return file.path.replace('http://localhost:3000/', 'https://cdn.example.com/');
-    };
+    const largeFileCallback = (file) => file.path.replace('http://localhost:3000/', 'https://cdn.example.com/');
 
     test('big.css', 'big.modified.css', {maxFileSize: 1, largeFileCallback}, done);
   });
