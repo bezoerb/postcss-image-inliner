@@ -44,7 +44,7 @@ module.exports = (options_ = {}) => {
     postcssPlugin: 'postcss-image-inliner',
     async Once(root) {
       const urls = new Set([]);
-      const filter = /^(background(?:-image)?)|(content)|(cursor)/;
+      const filter = /^(((background)|(mask))(?:-image)?)|(content)|(cursor)|/;
       // Get urls
       root.walkDecls(
         filter,
