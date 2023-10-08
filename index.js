@@ -8,6 +8,7 @@ const DEFAULTS = {
   maxFileSize: 10240,
   b64Svg: false,
   strict: false,
+  filter: /^(mask(?:-image)?)|(list-style(?:-image)?)|(background(?:-image)?)|(content)|(cursor)/,
   largeFileCallback: undefined,
   svgoPlugins: [
     {
@@ -31,7 +32,7 @@ const loop = (cb) => {
   };
 };
 
-const escapeRegExp = string => string.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d');
+const escapeRegExp = (string) => string.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d');
 
 module.exports = (options_ = {}) => {
   const options = {...DEFAULTS, ...options_};
@@ -44,7 +45,7 @@ module.exports = (options_ = {}) => {
     postcssPlugin: 'postcss-image-inliner',
     async Once(root) {
       const urls = new Set([]);
-      const filter = /^(background(?:-image)?)|(content)|(cursor)/;
+      const {filter} = options;
       // Get urls
       root.walkDecls(
         filter,

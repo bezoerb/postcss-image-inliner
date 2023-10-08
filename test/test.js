@@ -102,4 +102,8 @@ describe('postcss-image-inliner', () => {
   it('should allow globbing', (done) => {
     test('glob.in.css', 'glob.out.css', {assetPaths: 'test/*/images/'}, done);
   });
+
+  it('should consider filter option', (done) => {
+    test('filter.in.css', 'filter.out.css', {filter: /^border-image/}, done);
+  });
 });
